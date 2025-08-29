@@ -1,24 +1,21 @@
 version: '3'
 
 services:
-  # prize-service:
-  #   build:
-  #     context: ./../prize-service
-  #     dockerfile: ./../broker-service/broker-service.dockerfile
-  #   restart: always
-  #   ports:
-  #     - "8080:80"
-  #   deploy:
-  #     mode: replicated
-  #     replicas: 1
+  prize-service:
+    build:
+      context: ./../prize-service
+      dockerfile: ./../prize-service/prize-service.dockerfile
+    restart: always
+    ports:
+      - "8080:80"
+    deploy:
+      mode: replicated
+      replicas: 1
 
   redis:
     image: redis:alpine
     ports:
       - "6379:6379"
     restart: always
-    # deploy:
-    #   mode: replicated
-    #   replicas: 1
     volumes:
       - ./db-data/redis/:/var/lib/redis/data/

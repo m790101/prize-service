@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	webPort  = "5001"
-	redisUrl = "localhost:6379"
+	webPort  = "80"
+	redisUrl = "redis:6379"
 )
 
 type Config struct {
