@@ -29,6 +29,7 @@ func (app *Config) routes() http.Handler {
 	mux.Use(middleware.Heartbeat("/ping"))
 	mux.Post("/prizes", app.NewPrizes)
 	mux.Post("/draw", app.DrawPrizes)
+	mux.Patch("/prizes", app.UpdatePrized)
 
 	return mux
 }
