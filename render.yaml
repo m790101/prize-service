@@ -4,6 +4,7 @@ services:
     name: redis
     plan: starter # Options: starter (free), standard, pro
     maxmemoryPolicy: allkeys-lru
+    ipAllowList: []
     
   # Prize service
   - type: web
