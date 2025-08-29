@@ -1,0 +1,25 @@
+services:
+  # Redis service
+  - type: redis
+    name: redis
+    plan: starter # Options: starter (free), standard, pro
+    maxmemoryPolicy: allkeys-lru
+    
+  # Prize service
+  - type: web
+    name: prize-service
+    runtime: docker
+    plan: starter # Options: starter (free), standard, pro, pro plus, pro max
+    dockerfilePath: ./prize-service/prize-service.dockerfile
+    dockerContext: ./prize-service
+    envVars:
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: redis
+          property: connectionString
+      - key: PORT
+        value: "80"
+    # Auto-deploy settings
+    autoDeploy: true
+    branch: master # Specify your git branch
