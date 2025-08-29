@@ -5,14 +5,16 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/redis/go-redis/v9"
 )
 
 const (
-	webPort  = "80"
-	redisUrl = "redis:6379"
+	webPort = "80"
 )
+
+var redisUrl = os.Getenv("REDIS_URL")
 
 type Config struct {
 	Rdb *redis.Client
