@@ -14,8 +14,6 @@ const (
 	webPort = "80"
 )
 
-var redisUrl = os.Getenv("REDIS_URL")
-
 type Config struct {
 	Rdb *redis.Client
 }
@@ -49,11 +47,18 @@ func connectToRedis() (*redis.Client, error) {
 
 	var ctx = context.Background()
 
+	redisHost := os.Getenv("REDIS_HOST")
+	redisPort := os.Getenv("REDIS_PORT")
+	redisPassword := os.Getenv("REDIS_PASSWORD")
+	redisUsername := os.Getenv("REDIS_USERNAME")
+
 	clientOptions := &redis.Options{
-		Addr:     redisUrl,
-		Password: "", // no password set
-		DB:       0,  // use default DB
+		Addr:     fmt.Sprintf("%s:%s", redisHost, redisPort),
+		Username: redisUsername,
+		Password: redisPassword,
+		DB:       0,
 	}
+
 	rdb := redis.NewClient(clientOptions)
 	_, err := rdb.Ping(ctx).Result()
 
