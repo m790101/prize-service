@@ -45,7 +45,11 @@ func (app *Config) NewPrizes(w http.ResponseWriter, r *http.Request) {
 	payload := JsonResponse{
 		Status:  "200",
 		Message: "",
-		Data:    uId,
+		Data: struct {
+			ID uuid.UUID `json:"id"`
+		}{
+			ID: uId,
+		},
 	}
 
 	app.writeJson(w, http.StatusOK, payload)
@@ -77,7 +81,11 @@ func (app *Config) DrawPrizes(w http.ResponseWriter, r *http.Request) {
 	payload := JsonResponse{
 		Status:  "200",
 		Message: "",
-		Data:    prize,
+		Data: struct {
+			Name string `json:"name"`
+		}{
+			Name: prize,
+		},
 	}
 
 	app.writeJson(w, http.StatusOK, payload)
@@ -120,4 +128,13 @@ func (app *Config) UpdatePrized(w http.ResponseWriter, r *http.Request) {
 
 	app.writeJson(w, http.StatusOK, payload)
 
+}
+
+func (app *Config) HandleNotFound(w http.ResponseWriter, r *http.Request) {
+	res := JsonResponse{
+		Status:  "9999",
+		Message: "route not found",
+		Data:    struct{}{},
+	}
+	app.writeJson(w, http.StatusNotFound, res)
 }

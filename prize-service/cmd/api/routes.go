@@ -27,9 +27,14 @@ func (app *Config) routes() http.Handler {
 	}))
 
 	mux.Use(middleware.Heartbeat("/ping"))
-	mux.Post("/prizes", app.NewPrizes)
-	mux.Post("/draw", app.DrawPrizes)
-	mux.Patch("/prizes", app.UpdatePrized)
+
+	mux.Route("/api/v1", func(r chi.Router) {
+		r.Post("/prizes", app.NewPrizes)
+		r.Patch("/prizes", app.UpdatePrized)
+		r.Post("/draw", app.DrawPrizes)
+	})
+
+	mux.NotFound(app.HandleNotFound)
 
 	return mux
 }
