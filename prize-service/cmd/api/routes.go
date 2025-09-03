@@ -13,7 +13,7 @@ func (app *Config) routes() http.Handler {
 
 	mux.Use(cors.Handler(cors.Options{
 		AllowedOrigins: []string{
-			"https://*", "http://*",
+			"https://m790101.github.io/prize-draw/", "http://localhost:5174",
 		},
 		AllowedMethods: []string{
 			"GET", "POST", "PUT", "DELETE",
