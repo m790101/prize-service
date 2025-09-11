@@ -26,3 +26,13 @@ services:
     restart: always
     volumes:
       - ./db-data/redis/:/var/lib/redis/data/
+  mongo:
+    image: 'mongo:latest'
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: restaurants
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - ./db-data/mongo/:/data/db 
