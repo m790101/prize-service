@@ -5,8 +5,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"math/rand"
 	"net/http"
+	"os"
+
+	"github.com/joho/godotenv"
 )
 
 type Restaurant struct {
@@ -56,6 +60,15 @@ type DisplayName struct {
 }
 
 func fetchRestaurantsAtPoint(lat, lng float64, pointName string, rankBy string, searchNum int) ([]Restaurant, error) {
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	var googleKey = os.Getenv("GOOGLE_KEY")
+
+	log.Println("googleKey", googleKey)
 	// Add random offset to coordinates for variety (±300m)
 	offsetLat := lat + (rand.Float64()-0.5)*0.006
 	offsetLng := lng + (rand.Float64()-0.5)*0.006
@@ -97,7 +110,7 @@ func fetchRestaurantsAtPoint(lat, lng float64, pointName string, rankBy string, 
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-Goog-Api-Key", "AIzaSyBtJ0JvuPdkS67J-t9LbWA7VBWBPXFYLMg")
+	req.Header.Set("X-Goog-Api-Key", googleKey)
 	req.Header.Set("X-Goog-FieldMask", "places.id,places.displayName,places.formattedAddress,places.rating")
 
 	client := &http.Client{}
