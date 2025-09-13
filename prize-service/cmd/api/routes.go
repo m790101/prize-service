@@ -34,6 +34,8 @@ func (app *Config) routes() http.Handler {
 		r.Post("/prizes", app.NewPrizes)
 		r.Patch("/prizes", app.UpdatePrized)
 		r.Post("/draw", app.DrawPrizes)
+
+		r.Post("/restaurant/draw", app.DrawRestaurants)
 	})
 
 	mux.NotFound(app.HandleNotFound)
